@@ -1,11 +1,16 @@
 @echo off
-cd /d "C:\FaceCropper\src\Passport size crop"
+echo ============================================
+echo Passport Photo Cropper - Mobile Capture
+echo ============================================
+echo.
+echo This tool removes borders, table backgrounds, 
+echo and white space from passport photos captured 
+echo via mobile phone.
+echo.
 
-:: Remove previous class files
-del /Q *.class
+cd /d "%~dp0"
 
-:: Compile the Java code
-"C:\Program Files\Eclipse Adoptium\jdk-8.0.462.8-hotspot\bin\javac.exe" -cp "C:\FaceCropper\lib\opencv-455.jar;C:\FaceCropper\lib\flatlaf-3.5.jar" PassportCropper.java
+:: Run the Python script
+python passport_cropper.py
 
-:: Run the Java program
-java -cp ".;C:\FaceCropper\lib\opencv-455.jar;C:\FaceCropper\lib\flatlaf-3.5.jar" -Djava.library.path="C:\FaceCropper\lib" PassportCropper
+pause
