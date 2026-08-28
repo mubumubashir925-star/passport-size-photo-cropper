@@ -21,6 +21,12 @@ from skimage.measure import label, regionprops
 from scipy import ndimage
 from pathlib import Path
 
+# Python 2/3 compatibility
+try:
+    input = raw_input
+except NameError:
+    pass
+
 
 def crop_passport_photo(input_path, output_path, remove_white_bg=True, detect_edges=True):
     """
@@ -291,21 +297,21 @@ def process_folder(input_folder, output_folder, remove_white_bg=True, detect_edg
     total = len(image_files)
     success_count = 0
     
-    print(f"Found {total} images to process...")
+    print("Found {} images to process...".format(total))
     
     for idx, filename in enumerate(image_files):
         input_file = os.path.join(input_folder, filename)
         output_file = os.path.join(output_folder, filename)
         
         try:
-            print(f"[{idx+1}/{total}] Processing: {filename}...", end=" ")
+            print("[{}/{}] Processing: {}...".format(idx+1, total, filename), end=" ")
             crop_passport_photo(input_file, output_file, remove_white_bg, detect_edges)
             success_count += 1
             print("Done!")
         except Exception as e:
-            print(f"Error: {str(e)}")
+            print("Error: {}".format(str(e)))
     
-    print(f"\nCompleted! Successfully processed: {success_count}/{total} images")
+    print("\nCompleted! Successfully processed: {}/{} images".format(success_count, total))
     return True
 
 
@@ -330,13 +336,13 @@ def main():
     
     # Validate input folder
     if not os.path.isdir(input_folder):
-        print(f"Error: Input folder '{input_folder}' does not exist!")
+        print("Error: Input folder '{}' does not exist!".format(input_folder))
         sys.exit(1)
     
     # Create output folder if it doesn't exist
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
-        print(f"Created output folder: {output_folder}")
+        print("Created output folder: {}".format(output_folder))
     
     # Process images
     print()
